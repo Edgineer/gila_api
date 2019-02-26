@@ -5,9 +5,10 @@ const momentService = require('./moment.service');
 // routes
 
 router.post('/createMoment', createMoment);
-router.get('/', getAll);		//	FOR TESTING
-router.get('/:username', getByUsername);		//get all moments for specific user
-router.get('/:username/:date', getByDate);		//get moment for specific user by date, use to get current/next/previous/random moment
+router.get('/', getAll);        //  FOR TESTING
+router.get('/:username', getByUsername);        //get all moments for specific user, include ?sortBy=date
+router.get('/random/:username', getRandomMoment);   //get a random moment for a specific user     
+router.get('/:username/:date', getByDate);      //get moment for specific user by date, use to get current/next/previous/random moment
 
 module.exports = router;
 
@@ -17,9 +18,15 @@ function createMoment(req, res, next) {
         .catch(err => next(err));
 }
 
-function getAll(req, res, next) {			//FOR TESTING
+function getAll(req, res, next) {           //FOR TESTING
     momentService.getAll()
         .then(moments => res.json(moments))
+        .catch(err => next(err));
+}
+
+function getRandomMoment(req, res, next) {           
+    momentService.getRandomMoment(req.params.username)
+        .then(moment => moment ? res.json(moment) : res.sendStatus(404))
         .catch(err => next(err));
 }
 
