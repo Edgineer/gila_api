@@ -6,7 +6,7 @@ const momentService = require('./moment.service');
 
 router.post('/createMoment', createMoment);
 router.get('/', getAll);        //  FOR TESTING
-router.get('/:username', getByUsername);        //get all moments for specific user, include ?sortBy=date
+router.get('/:username', getByUsername);        //gets all moments for specific user, starting with most recent moment
 router.get('/random/:username', getRandomMoment);   //get a random moment for a specific user     
 router.get('/:username/:date', getByDate);      //get moment for specific user by date, use to get current/next/previous/random moment
 

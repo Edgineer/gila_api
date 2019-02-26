@@ -14,12 +14,7 @@ async function getAll() {       //  FOR TESTING
 }
 
 async function getByUsername(username_param) {
-    return await Moment.find({ username: username_param }).sort('-date');
-
-//Room.find({}).sort('-date')
-
-    //return await Moment.find({ username: username_param }).sort({date: -1});
-    //.sort({date: 'descending'})
+    return await Moment.find({ username: username_param }).sort({createdDate: 'descending'});
 }
 
 async function getRandomMoment(username_param) {
