@@ -4,14 +4,14 @@ const momentService = require('./moment.service');
 
 // routes
 
-router.post('/register', register);
+router.post('/createMoment', createMoment);
 router.get('/', getAll);		//	FOR TESTING
 router.get('/:username', getByUsername);		//get all moments for specific user
 router.get('/:username/:date', getByDate);		//get moment for specific user by date, use to get current/next/previous/random moment
 
 module.exports = router;
 
-function register(req, res, next) {
+function createMoment(req, res, next) {
     momentService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
