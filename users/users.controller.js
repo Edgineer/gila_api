@@ -8,7 +8,7 @@ router.post('/register', register);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
-router.put('reset/:resetString', resetPassword);
+router.put('/reset/:resetString', resetPassword);
 router.delete('/:id', _delete);
 
 module.exports = router;
