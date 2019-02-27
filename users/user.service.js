@@ -1,6 +1,7 @@
 ﻿const config = require('config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const Cryptr = require('cryptr');
 const db = require('_helpers/db');
 const User = db.User;
 
@@ -9,6 +10,7 @@ module.exports = {
     getById,
     create,
     update,
+    resetPassword,
     delete: _delete
 };
 
@@ -25,7 +27,7 @@ async function authenticate({ username, password }) {
 }
 
 async function getById(id) {
-    return await User.findById(id).select('-hash');
+    return await User.findById(id).select('-hash -resetString');
 }
 
 async function create(userParam) {
@@ -40,6 +42,8 @@ async function create(userParam) {
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
+
+    user.resetString = randomstring.generate(15);
 
     // save user
     await user.save();
@@ -59,8 +63,27 @@ async function update(id, userParam) {
         userParam.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
+    userParam.resetString = randomstring.generate(15);
+
     // copy userParam properties to user
     Object.assign(user, userParam);
+
+    await user.save();
+}
+
+async function resetPassword(resetString,{username,password}) {
+    const user = await User.findOne({username,resetString});
+
+    // validate
+    if (!user) throw 'User not found';
+
+
+    // hash password if it was entered
+    if (password) {
+        user.hash = bcrypt.hashSync(userParam.password, 10);
+    }
+
+    user.resetString = randomstring.generate(15);
 
     await user.save();
 }

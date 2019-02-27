@@ -8,6 +8,7 @@ router.post('/register', register);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
+router.put('reset/:resetString', resetPassword);
 router.delete('/:id', _delete);
 
 module.exports = router;
@@ -38,6 +39,12 @@ function getById(req, res, next) {
 
 function update(req, res, next) {
     userService.update(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function resetPassword(req, res, next) {
+    userService.resetPassword(req.params.resetString, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
