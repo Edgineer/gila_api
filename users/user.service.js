@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Cryptr = require('cryptr');
+const randomstring = require('randomstring');
 const db = require('_helpers/db');
 const User = db.User;
 
