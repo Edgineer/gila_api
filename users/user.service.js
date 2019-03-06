@@ -27,8 +27,6 @@ async function authenticate({ username, password }) {
     }
 }
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Yzc3MGU5Yzg5ZTdhMTAwMTcyYzliNGIiLCJpYXQiOjE1NTEzMDY1MjV9.zodVZaXKCjPqiNIbWWBarf9P81YGWgfXCzTDrGBBrhs
-
 async function getById(id) {
     return await User.findById(id).select('-hash -resetString');
 }
